@@ -6,6 +6,7 @@ import {
   Inventory2Outlined as Box,
   PersonOutlineOutlined as User,
   TerminalOutlined as Terminal,
+  ContentCutOutlined as Scissors,
 } from '@mui/icons-material';
 
 const Navbar = ({ currency, setCurrency }) => {
@@ -25,6 +26,24 @@ const Navbar = ({ currency, setCurrency }) => {
   ];
 
   return (
+    <nav className="fixed top-0 left-0 w-full z-50 glass-header py-4 px-8 flex justify-between items-center bg-obsidian/80 backdrop-blur-xl border-b border-white/5">
+      
+      {/* LOGO */}
+      <Link to="/" className="flex items-center gap-3 group">
+        <div className="w-10 h-10 relative flex items-center justify-center">
+          {/* Geometric SVG Logo */}
+          <svg viewBox="0 0 100 100" className="w-full h-full text-gold group-hover:scale-110 transition-transform duration-500">
+            <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-40" />
+            <polygon points="50,15 85,50 50,85 15,50" fill="none" stroke="currentColor" strokeWidth="4" />
+            <line x1="50" y1="5" x2="50" y2="95" stroke="currentColor" strokeWidth="1" className="opacity-50" />
+            <circle cx="50" cy="50" r="8" fill="currentColor" />
+          </svg>
+        </div>
+        <div className="flex flex-col hidden sm:flex">
+          <span className="text-xl font-black tracking-tighter text-ivory leading-none">D & S</span>
+          <span className="text-[8px] font-bold tracking-[0.3em] text-gold uppercase mt-1">ATELIER</span>
+        </div>
+      </Link>
 
       <div className="hidden md:flex items-center gap-8">
         {navLinks.map((link) => (
