@@ -14,8 +14,8 @@ const FloatingFabric = () => {
 
   return (
     <Float speed={2.5} rotationIntensity={0.5} floatIntensity={1.5}>
-      {/* Reduced polycount from 128x128 to 64x64 for massive mobile optimization */}
-      <Sphere ref={meshRef} args={[1.2, 64, 64]}>
+      {/* Decimated polycount from 64x64 to 32x32 for ultra-legacy mobile GPU optimization like Galaxy S8 */}
+      <Sphere ref={meshRef} args={[1.2, 32, 32]}>
         <MeshDistortMaterial
           color="#d4af37"
           attach="material"

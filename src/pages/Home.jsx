@@ -16,7 +16,7 @@ const Home = () => {
         className="max-w-4xl relative z-10 select-none mt-20"
       >
 
-        <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 text-gold-gradient leading-none">
+        <h1 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-8 text-gold-gradient leading-none">
           DELECTABLE <br /> & SVELT
         </h1>
 
