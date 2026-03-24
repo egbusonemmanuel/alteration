@@ -5,7 +5,7 @@
 :root {
   --obsidian: #0A0A0A;
   --ivory: #F5F5F7;
-  --gold: #D4AF37;
+  --gold: #B095FF;
 }
 
 body {
@@ -26,11 +26,11 @@ body {
   }
 
   .text-gold-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold to-yellow-200;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold to-fuchsia-300;
   }
 
   .btn-primary {
-    @apply px-6 py-3 bg-gold text-obsidian font-semibold rounded-full hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(212,175,55,0.4)];
+    @apply px-6 py-3 bg-gold text-obsidian font-semibold rounded-full hover:bg-fuchsia-300 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(176,149,255,0.4)];
   }
 
   .btn-outline {

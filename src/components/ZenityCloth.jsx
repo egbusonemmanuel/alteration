@@ -17,7 +17,7 @@ const FloatingFabric = () => {
       {/* Decimated polycount from 64x64 to 32x32 for ultra-legacy mobile GPU optimization like Galaxy S8 */}
       <Sphere ref={meshRef} args={[1.2, 32, 32]}>
         <MeshDistortMaterial
-          color="#d4af37"
+          color="#B095FF"
           attach="material"
           distort={0.6}
           speed={1.2}
@@ -36,7 +36,7 @@ const ZenityCloth = () => {
       <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 4] }} gl={{ antialias: false, powerPreference: "high-performance" }}>
         <Suspense fallback={null}>
           <ambientLight intensity={0.3} color="#ffffff" />
-          <directionalLight position={[5, 10, 5]} intensity={1.5} color="#d4af37" />
+          <directionalLight position={[5, 10, 5]} intensity={1.5} color="#B095FF" />
           <Environment preset="studio" />
           <FloatingFabric />
         </Suspense>

@@ -9,8 +9,8 @@ export default {
       colors: {
         obsidian: "#0A0A0A",
         ivory: "#F5F5F7",
-        gold: "#D4AF37",
-        gold_muted: "#B8860B",
+        gold: "#B095FF",       // Redefined 'gold' classes as Soft Lavender
+        gold_muted: "#8F72D9", // Redefined as Deeper Lavender
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
