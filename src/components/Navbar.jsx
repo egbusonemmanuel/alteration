@@ -74,21 +74,6 @@ const Navbar = ({ currency, setCurrency }) => {
 
         {/* ACTIONS */}
         <div className="flex items-center gap-3 sm:gap-4">
-          {/* Currency Toggle */}
-          <div className="flex bg-white/5 rounded-full p-1 border border-white/10">
-            {['NGN', 'USD'].map((c) => (
-              <button
-                key={c}
-                onClick={() => setCurrency(c)}
-                className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                  currency === c ? 'bg-lavender text-obsidian' : 'text-ivory/50 hover:text-ivory'
-                }`}
-              >
-                {c === 'NGN' ? '₦' : '$'}
-              </button>
-            ))}
-          </div>
-
           {/* Clerk Auth */}
           {isSignedIn ? (
             <UserButton appearance={{ elements: { avatarBox: 'w-8 h-8 sm:w-9 sm:h-9 border-2 border-lavender' } }} />
