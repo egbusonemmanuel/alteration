@@ -63,6 +63,9 @@ const Layout = ({ children, currency, setCurrency }) => {
             <a href="tel:+2348020547860" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit flex items-center gap-2">
               <span className="text-neon_cyan">✆</span> 0802 054 7860
             </a>
+            <a href="tel:+447949582399" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit flex items-center gap-2">
+              <span className="text-neon_cyan">✆</span> +44 (0) 7949 582 399
+            </a>
             <p className="text-ivory/40 text-xs italic mt-4">
               Visits by appointment only.
             </p>
