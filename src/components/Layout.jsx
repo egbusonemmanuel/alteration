@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from './Navbar';
+import { Link } from 'react-router-dom';
 
 const Layout = ({ children, currency, setCurrency }) => {
   return (
@@ -46,10 +47,10 @@ const Layout = ({ children, currency, setCurrency }) => {
           {/* Links Col */}
           <div className="flex flex-col gap-4">
             <h4 className="text-ivory font-bold tracking-widest text-sm uppercase mb-2">The Brand</h4>
-            <a href="#" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">About Us</a>
-            <a href="#" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">Privacy Policy</a>
-            <a href="#" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">Refund Policy</a>
-            <a href="#" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">Terms of Service</a>
+            <Link to="/about" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">About Us</Link>
+            <Link to="/privacy" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">Privacy Policy</Link>
+            <Link to="/refund" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">Refund Policy</Link>
+            <Link to="/shop" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">Gallery</Link>
           </div>
 
           {/* Contact Col */}

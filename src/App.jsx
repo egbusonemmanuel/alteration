@@ -7,6 +7,9 @@ import Alterations from './pages/Alterations';
 import Admin from './pages/Admin';
 import Auth from './pages/Auth';
 import ProtectedRoute from './components/ProtectedRoute';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import RefundPolicy from './pages/RefundPolicy';
+import About from './pages/About';
 
 function App() {
   const [currency, setCurrency] = useState('NGN');
@@ -34,6 +37,9 @@ function App() {
                   <Admin />
                 </ProtectedRoute>
               } />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/refund" element={<RefundPolicy />} />
+              <Route path="/about" element={<About />} />
             </Routes>
           </Layout>
         } />
