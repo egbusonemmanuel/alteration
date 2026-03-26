@@ -41,6 +41,9 @@ const About = () => {
             <a href="mailto:delectablesvelt@gmail.com" className="flex items-center gap-3 text-ivory/70 hover:text-neon_cyan transition-colors">
               <span className="text-neon_cyan text-lg">✉</span> delectablesvelt@gmail.com
             </a>
+            <a href="tel:+2348020547860" className="flex items-center gap-3 text-ivory/70 hover:text-neon_cyan transition-colors">
+              <span className="text-neon_cyan text-lg">✆</span> 0802 054 7860
+            </a>
           </div>
         </div>
 
