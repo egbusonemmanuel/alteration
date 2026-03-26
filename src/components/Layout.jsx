@@ -50,6 +50,7 @@ const Layout = ({ children, currency, setCurrency }) => {
             <Link to="/about" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">About Us</Link>
             <Link to="/privacy" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">Privacy Policy</Link>
             <Link to="/refund" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">Refund Policy</Link>
+            <Link to="/terms" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">Terms & Conditions</Link>
             <Link to="/shop" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">Gallery</Link>
           </div>
 

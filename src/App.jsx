@@ -10,6 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import RefundPolicy from './pages/RefundPolicy';
 import About from './pages/About';
+import Terms from './pages/Terms';
 
 function App() {
   const [currency, setCurrency] = useState('NGN');
@@ -40,6 +41,7 @@ function App() {
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/refund" element={<RefundPolicy />} />
               <Route path="/about" element={<About />} />
+              <Route path="/terms" element={<Terms />} />
             </Routes>
           </Layout>
         } />
