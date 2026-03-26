@@ -17,7 +17,7 @@ const Home = () => {
       >
 
         <h1 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-8 text-lavender-gradient leading-none">
-          DELECTABLE SVELT <br /> DESIGNS
+          DELECTABLE & SVELT <br /> DESIGNS
         </h1>
 
         <p className="text-2xl md:text-3xl text-ivory mb-12 font-normal tracking-wide max-w-3xl mx-auto leading-relaxed pointer-events-none uppercase drop-shadow-md">
