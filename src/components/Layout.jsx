@@ -32,8 +32,44 @@ const Layout = ({ children, currency, setCurrency }) => {
         {children}
       </main>
 
-      <footer className="py-8 px-8 border-t border-white/5 text-center text-ivory/40 text-sm">
-        <p>© 2026 DELECTABLE & SVELT DESIGNS. THE AVANT-GARDE ATELIER.</p>
+      <footer className="bg-obsidian/50 border-t border-white/10 pt-16 pb-8 px-8 sm:px-12 relative z-10 mt-20">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+          {/* Brand Col */}
+          <div className="flex flex-col gap-4">
+            <span className="text-xl font-black tracking-tighter text-ivory leading-none">DSD</span>
+            <span className="text-[10px] font-bold tracking-[0.3em] text-lavender uppercase">DELECTABLE & SVELT DESIGNS</span>
+            <p className="text-ivory/60 text-sm leading-relaxed mt-2 max-w-sm">
+              The Avant-Garde Atelier. Where Modesty Shapes Every Design.
+            </p>
+          </div>
+
+          {/* Links Col */}
+          <div className="flex flex-col gap-4">
+            <h4 className="text-ivory font-bold tracking-widest text-sm uppercase mb-2">The Brand</h4>
+            <a href="#" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">About Us</a>
+            <a href="#" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">Privacy Policy</a>
+            <a href="#" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">Refund Policy</a>
+            <a href="#" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit">Terms of Service</a>
+          </div>
+
+          {/* Contact Col */}
+          <div className="flex flex-col gap-4">
+            <h4 className="text-ivory font-bold tracking-widest text-sm uppercase mb-2">Contact The Atelier</h4>
+            <a href="mailto:delectablesvelt@gmail.com" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit flex items-center gap-2">
+              <span className="text-neon_cyan">✉</span> delectablesvelt@gmail.com
+            </a>
+            <a href="tel:+2348000000000" className="text-ivory/60 hover:text-lavender text-sm transition-colors w-fit flex items-center gap-2">
+              <span className="text-neon_cyan">✆</span> +234 800 000 0000
+            </a>
+            <p className="text-ivory/40 text-xs italic mt-4">
+              Visits by appointment only.
+            </p>
+          </div>
+        </div>
+
+        <div className="text-center text-ivory/30 text-xs border-t border-white/5 pt-8 max-w-6xl mx-auto">
+          <p>© {new Date().getFullYear()} DELECTABLE & SVELT DESIGNS. All Rights Reserved.</p>
+        </div>
       </footer>
     </div>
   );
