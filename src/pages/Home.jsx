@@ -16,8 +16,8 @@ const Home = () => {
         className="max-w-4xl relative z-10 select-none mt-20"
       >
 
-        <h1 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-8 text-gold-gradient leading-none">
-          DELECTABLE <br /> & SVELT
+        <h1 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-8 text-lavender-gradient leading-none">
+          DELECTABLE SVELT <br /> DESIGN
         </h1>
 
         <p className="text-xl md:text-2xl text-ivory/60 mb-12 font-light tracking-wide max-w-2xl mx-auto leading-relaxed pointer-events-none uppercase">
@@ -31,7 +31,7 @@ const Home = () => {
             <ArrowRight className="w-5 h-5" />
           </Link>
           <Link to="/alterations" className="btn-outline flex items-center gap-3">
-            <Sparkles className="w-5 h-5 text-gold" />
+            <Sparkles className="w-5 h-5 text-lavender" />
             VIRTUAL CLOSET
           </Link>
         </div>

@@ -35,18 +35,21 @@ const Navbar = ({ currency, setCurrency }) => {
         
         {/* LOGO */}
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 relative flex items-center justify-center">
-            {/* Geometric SVG Logo */}
-            <svg viewBox="0 0 100 100" className="w-full h-full text-gold group-hover:scale-110 transition-transform duration-500">
-              <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-40" />
-              <polygon points="50,15 85,50 50,85 15,50" fill="none" stroke="currentColor" strokeWidth="4" />
-              <line x1="50" y1="5" x2="50" y2="95" stroke="currentColor" strokeWidth="1" className="opacity-50" />
-              <circle cx="50" cy="50" r="8" fill="currentColor" />
-            </svg>
-          </div>
-          <div className="flex flex-col hidden sm:flex">
-            <span className="text-xl font-black tracking-tighter text-ivory leading-none">D & S</span>
-            <span className="text-[8px] font-bold tracking-[0.3em] text-gold uppercase mt-1">ATELIER</span>
+          {/* Custom Client Logo */}
+          <img 
+            src="/dsd-logo.jpg" 
+            alt="DSD Logo" 
+            className="h-12 sm:h-16 object-contain group-hover:scale-105 transition-transform duration-500 rounded-lg"
+            onError={(e) => {
+              // Fallback if the image isn't placed in the folder yet
+              e.target.style.display = 'none';
+              if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
+            }}
+          />
+          {/* Fallback Text Logo */}
+          <div className="hidden flex-col sm:flex" style={{ display: 'none' }}>
+            <span className="text-xl font-black tracking-tighter text-ivory leading-none">DSD</span>
+            <span className="text-[6px] font-bold tracking-[0.3em] text-lavender uppercase mt-1">DELECTABLE & SVELT DESIGNS</span>
           </div>
         </Link>
 
@@ -56,14 +59,14 @@ const Navbar = ({ currency, setCurrency }) => {
             <Link
               key={link.name}
               to={link.path}
-              className={`group relative flex items-center gap-2 transition-colors duration-300 ${location.pathname === link.path ? 'text-gold' : 'text-ivory/70 hover:text-gold'}`}
+              className={`group relative flex items-center gap-2 transition-colors duration-300 ${location.pathname === link.path ? 'text-lavender' : 'text-ivory/70 hover:text-lavender'}`}
               onMouseEnter={() => setIsHovered(link.name)}
               onMouseLeave={() => setIsHovered(null)}
             >
               {link.icon}
               <span className="text-xs font-bold uppercase tracking-widest">{link.name}</span>
               {(isHovered === link.name || location.pathname === link.path) && (
-                <motion.div layoutId="nav-indicator" className="absolute -bottom-2 left-0 w-full h-[2px] bg-gold" />
+                <motion.div layoutId="nav-indicator" className="absolute -bottom-2 left-0 w-full h-[2px] bg-lavender" />
               )}
             </Link>
           ))}
@@ -78,7 +81,7 @@ const Navbar = ({ currency, setCurrency }) => {
                 key={c}
                 onClick={() => setCurrency(c)}
                 className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                  currency === c ? 'bg-gold text-obsidian' : 'text-ivory/50 hover:text-ivory'
+                  currency === c ? 'bg-lavender text-obsidian' : 'text-ivory/50 hover:text-ivory'
                 }`}
               >
                 {c === 'NGN' ? '₦' : '$'}
@@ -88,7 +91,7 @@ const Navbar = ({ currency, setCurrency }) => {
 
           {/* Clerk Auth */}
           {isSignedIn ? (
-            <UserButton appearance={{ elements: { avatarBox: 'w-8 h-8 sm:w-9 sm:h-9 border-2 border-gold' } }} />
+            <UserButton appearance={{ elements: { avatarBox: 'w-8 h-8 sm:w-9 sm:h-9 border-2 border-lavender' } }} />
           ) : (
             <SignInButton mode="modal">
               <button className="btn-primary py-2 px-3 sm:px-4 text-[10px] sm:text-xs">SIGN IN</button>
@@ -113,7 +116,7 @@ const Navbar = ({ currency, setCurrency }) => {
             className="fixed inset-0 z-[100] bg-obsidian/95 backdrop-blur-3xl flex flex-col p-8 md:hidden"
           >
             <div className="flex justify-end mb-12">
-              <button className="text-ivory/50 hover:text-gold p-2" onClick={() => setMobileMenuOpen(false)}>
+              <button className="text-ivory/50 hover:text-lavender p-2" onClick={() => setMobileMenuOpen(false)}>
                 <Close fontSize="large" />
               </button>
             </div>
@@ -124,7 +127,7 @@ const Navbar = ({ currency, setCurrency }) => {
                   key={link.name}
                   to={link.path}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`text-2xl font-black uppercase tracking-widest flex items-center gap-4 transition-colors ${location.pathname === link.path ? 'text-gold' : 'text-ivory hover:text-gold'}`}
+                  className={`text-2xl font-black uppercase tracking-widest flex items-center gap-4 transition-colors ${location.pathname === link.path ? 'text-lavender' : 'text-ivory hover:text-lavender'}`}
                 >
                   {link.icon}
                   {link.name}
@@ -133,7 +136,7 @@ const Navbar = ({ currency, setCurrency }) => {
             </div>
 
             <div className="flex flex-col items-center gap-4 mt-auto border-t border-white/10 pt-8">
-              <span className="text-xs font-bold tracking-[0.3em] text-gold uppercase">THE ZERO-GRAVITY ATELIER</span>
+              <span className="text-xs font-bold tracking-[0.3em] text-lavender uppercase">THE ZERO-GRAVITY ATELIER</span>
               <p className="text-[10px] text-ivory/40 uppercase">WHERE MODESTY SHAPES EVERY DESIGN</p>
             </div>
           </motion.div>

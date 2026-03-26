@@ -81,8 +81,8 @@ const Admin = () => {
         {/* Sidebar */}
         <div className="w-full md:w-60 flex flex-col gap-2">
           <div className="glass-card p-4 mb-4 text-center">
-            <div className="w-14 h-14 bg-gold/20 rounded-full mx-auto mb-2 flex items-center justify-center">
-              <span className="text-gold font-black text-sm">MT</span>
+            <div className="w-14 h-14 bg-lavender/20 rounded-full mx-auto mb-2 flex items-center justify-center">
+              <span className="text-lavender font-black text-sm">MT</span>
             </div>
             <h3 className="font-bold text-sm tracking-widest">MASTER TAILOR</h3>
             <p className="text-[10px] text-ivory/40 uppercase">Atelier Lead</p>
@@ -90,7 +90,7 @@ const Admin = () => {
           {sidebarItems.map(item => (
             <button key={item.id} onClick={() => setActiveTab(item.id)}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
-                activeTab === item.id ? 'bg-gold text-obsidian font-bold' : 'text-ivory/60 hover:bg-white/5'
+                activeTab === item.id ? 'bg-lavender text-obsidian font-bold' : 'text-ivory/60 hover:bg-white/5'
               }`}>
               {item.icon}
               <span className="text-xs uppercase tracking-widest">{item.label}</span>
@@ -104,7 +104,7 @@ const Admin = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {stats.map(s => (
               <div key={s.label} className="glass-card p-5">
-                <div className="flex items-center gap-2 text-gold mb-1">
+                <div className="flex items-center gap-2 text-lavender mb-1">
                   {s.icon}
                   <span className="text-[10px] font-bold uppercase tracking-widest">{s.label}</span>
                 </div>
@@ -118,13 +118,13 @@ const Admin = () => {
             <div className="glass-card overflow-hidden">
               <div className="p-5 border-b border-white/5 flex justify-between items-center">
                 <h4 className="font-black tracking-widest uppercase text-sm">SEWING BOOKINGS</h4>
-                <button onClick={fetchBookings} className="text-ivory/40 hover:text-gold transition-colors">
+                <button onClick={fetchBookings} className="text-ivory/40 hover:text-lavender transition-colors">
                   <Refresh fontSize="small" />
                 </button>
               </div>
               {loading ? (
                 <div className="flex justify-center items-center py-16">
-                  <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin" />
+                  <div className="w-8 h-8 border-2 border-lavender border-t-transparent rounded-full animate-spin" />
                 </div>
               ) : bookings.length === 0 ? (
                 <div className="text-center py-16 text-ivory/40">
@@ -152,7 +152,7 @@ const Admin = () => {
                           </td>
                           <td className="px-5 py-4">
                             {b.garment_url
-                              ? <a href={b.garment_url} target="_blank" rel="noopener noreferrer" className="text-gold text-xs hover:underline">View ↗</a>
+                              ? <a href={b.garment_url} target="_blank" rel="noopener noreferrer" className="text-lavender text-xs hover:underline">View ↗</a>
                               : <span className="text-ivory/30 text-xs">—</span>
                             }
                           </td>
@@ -194,14 +194,14 @@ const Admin = () => {
                       <label className="text-[10px] font-bold tracking-widest text-ivory/40 uppercase block mb-1">{field.label}</label>
                       <input type="text" value={newProduct[field.key]} placeholder={field.placeholder}
                         onChange={(e) => setNewProduct(p => ({ ...p, [field.key]: e.target.value }))}
-                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-gold transition-colors text-ivory placeholder-ivory/20"
+                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-lavender transition-colors text-ivory placeholder-ivory/20"
                       />
                     </div>
                   ))}
                   <div>
                     <label className="text-[10px] font-bold tracking-widest text-ivory/40 uppercase block mb-1">Category</label>
                     <select value={newProduct.category} onChange={(e) => setNewProduct(p => ({ ...p, category: e.target.value }))}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-gold text-ivory">
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-lavender text-ivory">
                       {['Bespoke', 'Ready-to-Wear', 'Masterpiece'].map(c => <option key={c} className="bg-obsidian">{c}</option>)}
                     </select>
                   </div>

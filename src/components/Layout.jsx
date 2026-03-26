@@ -6,8 +6,8 @@ const Layout = ({ children, currency, setCurrency }) => {
     <div className="min-h-screen bg-obsidian text-ivory relative overflow-hidden">
       {/* Zero-Gravity Background Elements */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-20 left-[10%] w-64 h-64 bg-gold/5 rounded-full blur-[100px] animate-pulse-slow" />
-        <div className="absolute bottom-20 right-[15%] w-96 h-96 bg-gold/10 rounded-full blur-[120px] animate-pulse-slow delayed-animation" />
+        <div className="absolute top-20 left-[10%] w-64 h-64 bg-lavender/5 rounded-full blur-[100px] animate-pulse-slow" />
+        <div className="absolute bottom-20 right-[15%] w-96 h-96 bg-lavender/10 rounded-full blur-[120px] animate-pulse-slow delayed-animation" />
         
         {/* Floating dust/particles */}
         {[...Array(20)].map((_, i) => (

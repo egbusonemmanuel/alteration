@@ -19,7 +19,7 @@ const MeasurementSilhouette = ({ onPointClick, activePoint }) => {
         fill="currentColor"
       >
         <path
-          className="text-gold"
+          className="text-lavender"
           d="M50,10 C55,10 60,15 60,22 C60,25 58,28 55,30 C65,32 75,38 78,50 C80,60 78,80 75,100 C72,120 70,140 72,160 C73,170 75,185 70,190 C65,195 55,190 50,190 C45,190 35,195 30,190 C25,185 27,170 28,160 C30,140 28,120 25,100 C22,80 20,60 22,50 C25,38 35,32 45,30 C42,28 40,25 40,22 C40,15 45,10 50,10 Z"
         />
       </svg>
@@ -33,15 +33,15 @@ const MeasurementSilhouette = ({ onPointClick, activePoint }) => {
           onClick={() => onPointClick(point.id)}
           className={`absolute w-4 h-4 rounded-full border-2 transition-all duration-300 z-20 ${
             activePoint === point.id
-              ? 'bg-gold border-white scale-125 shadow-[0_0_15px_rgba(212,175,55,0.8)]'
-              : 'bg-white/10 border-gold/40 hover:bg-gold/40'
+              ? 'bg-lavender border-white scale-125 shadow-[0_0_15px_rgba(212,175,55,0.8)]'
+              : 'bg-white/10 border-lavender/40 hover:bg-lavender/40'
           }`}
           style={{ top: `${point.y}%`, left: `${point.x}%`, transform: 'translate(-50%, -50%)' }}
         >
           {activePoint === point.id && (
             <motion.div
               layoutId="active-ring"
-              className="absolute -inset-2 border border-gold rounded-full"
+              className="absolute -inset-2 border border-lavender rounded-full"
               animate={{ scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
             />
@@ -50,7 +50,7 @@ const MeasurementSilhouette = ({ onPointClick, activePoint }) => {
       ))}
 
       {/* Labels */}
-      <div className="absolute top-4 left-4 text-[10px] font-bold tracking-[0.2em] text-gold/60 uppercase">
+      <div className="absolute top-4 left-4 text-[10px] font-bold tracking-[0.2em] text-lavender/60 uppercase">
         SELECT MEASUREMENT POINT
       </div>
       
@@ -60,7 +60,7 @@ const MeasurementSilhouette = ({ onPointClick, activePoint }) => {
           animate={{ opacity: 1, y: 0 }}
           className="absolute bottom-4 left-0 w-full text-center"
         >
-          <span className="text-xs font-black text-ivory tracking-[0.3em] uppercase bg-gold/10 px-4 py-1 rounded-full border border-gold/20">
+          <span className="text-xs font-black text-ivory tracking-[0.3em] uppercase bg-lavender/10 px-4 py-1 rounded-full border border-lavender/20">
             {activePoint} Activated
           </span>
         </motion.div>
