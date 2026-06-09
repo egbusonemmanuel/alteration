@@ -2,12 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowForwardOutlined as ArrowRight, AutoAwesomeOutlined as Sparkles } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import ZenityCloth from '../components/ZenityCloth';
 
 const Home = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 overflow-hidden relative">
-      <ZenityCloth />
       
       <motion.div
         initial={{ opacity: 0, y: 50 }}
