@@ -23,9 +23,10 @@ const Admin = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddProduct, setShowAddProduct] = useState(false);
-  const [newProduct, setNewProduct] = useState({ name: '', price_ngn: '', price_usd: '', category: 'Bespoke', tag: '' });
+  const [newProduct, setNewProduct] = useState({ name: '', price_ngn: '', price_usd: '', category: 'Bespoke', tag: '', image_url: '' });
   const [saving, setSaving] = useState(false);
   const [saveMsg, setSaveMsg] = useState('');
+  const [imageFile, setImageFile] = useState(null);
 
   const fetchBookings = async () => {
     setLoading(true);
@@ -47,16 +48,41 @@ const Admin = () => {
   const addProduct = async () => {
     setSaving(true);
     setSaveMsg('');
+    let imageUrl = newProduct.image_url || null;
+
+    if (imageFile) {
+      try {
+        const ext = imageFile.name.split('.').pop();
+        const filePath = `design-${Date.now()}.${ext}`;
+        const { error: uploadError } = await supabase.storage.from('products').upload(filePath, imageFile, { upsert: true });
+        if (uploadError) throw uploadError;
+
+        const { data: urlData } = supabase.storage.from('products').getPublicUrl(filePath);
+        imageUrl = urlData?.publicUrl || imageUrl;
+      } catch (err) {
+        console.error("Image upload error:", err);
+        setSaveMsg('Image upload error: ' + err.message);
+        setSaving(false);
+        return;
+      }
+    }
+
     const { error } = await supabase.from('products').insert({
       name: newProduct.name,
       price_ngn: parseInt(newProduct.price_ngn) || 0,
       price_usd: parseInt(newProduct.price_usd) || 0,
       category: newProduct.category,
       tag: newProduct.tag.toUpperCase(),
+      image_url: imageUrl,
     });
     setSaving(false);
     if (error) { setSaveMsg('Error: ' + error.message); }
-    else { setSaveMsg('Product added!'); setNewProduct({ name: '', price_ngn: '', price_usd: '', category: 'Bespoke', tag: '' }); setShowAddProduct(false); }
+    else { 
+      setSaveMsg('Product added!'); 
+      setNewProduct({ name: '', price_ngn: '', price_usd: '', category: 'Bespoke', tag: '', image_url: '' }); 
+      setImageFile(null);
+      setShowAddProduct(false); 
+    }
   };
 
   const totalRevenue = bookings.length
@@ -189,6 +215,7 @@ const Admin = () => {
                     { key: 'price_ngn', label: 'Price (₦ NGN)', placeholder: '450000' },
                     { key: 'price_usd', label: 'Price ($ USD)', placeholder: '550' },
                     { key: 'tag', label: 'Tag', placeholder: 'WEIGHTLESS' },
+                    { key: 'image_url', label: 'Image URL (Optional)', placeholder: 'https://example.com/image.jpg' },
                   ].map(field => (
                     <div key={field.key}>
                       <label className="text-[10px] font-bold tracking-widest text-ivory/40 uppercase block mb-1">{field.label}</label>
@@ -198,6 +225,13 @@ const Admin = () => {
                       />
                     </div>
                   ))}
+                  <div>
+                    <label className="text-[10px] font-bold tracking-widest text-ivory/40 uppercase block mb-1">Upload Image File (Overrides URL)</label>
+                    <input type="file" accept="image/*"
+                      onChange={(e) => setImageFile(e.target.files[0])}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-lavender text-ivory file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-lavender/20 file:text-lavender hover:file:bg-lavender/30 transition-all cursor-pointer mb-5"
+                    />
+                  </div>
                   <div>
                     <label className="text-[10px] font-bold tracking-widest text-ivory/40 uppercase block mb-1">Category</label>
                     <select value={newProduct.category} onChange={(e) => setNewProduct(p => ({ ...p, category: e.target.value }))}
