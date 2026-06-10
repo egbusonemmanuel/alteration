@@ -8,6 +8,7 @@ import {
   TrendingUpOutlined as TrendingUp,
   AddOutlined as Add,
   RefreshOutlined as Refresh,
+  DeleteOutlineOutlined as DeleteIcon,
 } from '@mui/icons-material';
 import { supabase } from '../lib/supabase';
 
@@ -27,6 +28,9 @@ const Admin = () => {
   const [saving, setSaving] = useState(false);
   const [saveMsg, setSaveMsg] = useState('');
   const [imageFile, setImageFile] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [productsLoading, setProductsLoading] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
 
   const fetchBookings = async () => {
     setLoading(true);
@@ -38,7 +42,15 @@ const Admin = () => {
     setLoading(false);
   };
 
+  const fetchProducts = async () => {
+    setProductsLoading(true);
+    const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+    if (!error && data) setProducts(data);
+    setProductsLoading(false);
+  };
+
   useEffect(() => { fetchBookings(); }, []);
+  useEffect(() => { if (activeTab === 'products') fetchProducts(); }, [activeTab]);
 
   const updateStatus = async (id, status) => {
     await supabase.from('bookings').update({ status }).eq('id', id);
@@ -81,8 +93,17 @@ const Admin = () => {
       setSaveMsg('Product added!'); 
       setNewProduct({ name: '', price_ngn: '', price_usd: '', category: 'Bespoke', tag: '', image_url: '' }); 
       setImageFile(null);
-      setShowAddProduct(false); 
+      setShowAddProduct(false);
+      fetchProducts();
     }
+  };
+
+  const deleteProduct = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this design? This cannot be undone.')) return;
+    setDeletingId(id);
+    const { error } = await supabase.from('products').delete().eq('id', id);
+    if (!error) setProducts(prev => prev.filter(p => p.id !== id));
+    setDeletingId(null);
   };
 
   const totalRevenue = bookings.length
@@ -245,6 +266,63 @@ const Admin = () => {
                   </button>
                 </motion.div>
               )}
+
+              {/* Posted Designs List */}
+              <div className="mt-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h5 className="text-[10px] font-bold tracking-widest text-ivory/40 uppercase">Your Posted Designs</h5>
+                  <button onClick={fetchProducts} className="text-ivory/40 hover:text-lavender transition-colors">
+                    <Refresh fontSize="small" />
+                  </button>
+                </div>
+                {productsLoading ? (
+                  <div className="flex justify-center py-10">
+                    <div className="w-7 h-7 border-2 border-lavender border-t-transparent rounded-full animate-spin" />
+                  </div>
+                ) : products.length === 0 ? (
+                  <div className="text-center py-10 text-ivory/30 text-xs tracking-widest uppercase">No designs posted yet.</div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {products.map(product => (
+                      <motion.div
+                        key={product.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden group relative"
+                      >
+                        {/* Image */}
+                        <div className="w-full h-40 bg-white/5 flex items-center justify-center overflow-hidden">
+                          {product.image_url ? (
+                            <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <span className="text-4xl text-lavender/20 font-black">✦</span>
+                          )}
+                        </div>
+                        {/* Info */}
+                        <div className="p-4">
+                          <p className="text-[10px] text-lavender font-bold tracking-widest uppercase mb-1">{product.category} · {product.tag}</p>
+                          <h6 className="font-bold text-ivory text-sm truncate">{product.name}</h6>
+                          <div className="flex items-center justify-between mt-3">
+                            <div>
+                              <p className="text-xs text-ivory/60">₦{(product.price_ngn || 0).toLocaleString()}</p>
+                              <p className="text-[10px] text-ivory/30">${(product.price_usd || 0).toLocaleString()}</p>
+                            </div>
+                            <button
+                              onClick={() => deleteProduct(product.id)}
+                              disabled={deletingId === product.id}
+                              className="flex items-center gap-1 text-red-400/60 hover:text-red-400 hover:bg-red-500/10 px-3 py-2 rounded-lg transition-all text-[10px] font-bold tracking-widest uppercase disabled:opacity-40"
+                            >
+                              <DeleteIcon fontSize="small" />
+                              {deletingId === product.id ? 'DELETING...' : 'DELETE'}
+                            </button>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           )}
 
