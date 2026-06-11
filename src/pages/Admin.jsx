@@ -62,41 +62,67 @@ const Admin = () => {
     setSaveMsg('');
     let imageUrl = newProduct.image_url || null;
 
+    console.log('[Admin] Starting addProduct...');
+    console.log('[Admin] Supabase URL:', import.meta.env.VITE_SUPABASE_URL);
+
+    // Upload image if one was selected
     if (imageFile) {
       try {
+        console.log('[Admin] Uploading image:', imageFile.name, imageFile.size, 'bytes');
         const ext = imageFile.name.split('.').pop();
         const filePath = `design-${Date.now()}.${ext}`;
-        const { error: uploadError } = await supabase.storage.from('products').upload(filePath, imageFile, { upsert: true });
+
+        const uploadPromise = supabase.storage.from('products').upload(filePath, imageFile, { upsert: true });
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Upload timed out after 15 seconds. Check your Supabase URL and network.')), 15000)
+        );
+
+        const { error: uploadError } = await Promise.race([uploadPromise, timeoutPromise]);
         if (uploadError) throw uploadError;
 
         const { data: urlData } = supabase.storage.from('products').getPublicUrl(filePath);
         imageUrl = urlData?.publicUrl || imageUrl;
+        console.log('[Admin] Image uploaded successfully:', imageUrl);
       } catch (err) {
-        console.error("Image upload error:", err);
-        setSaveMsg('Image upload error: ' + err.message);
+        console.error('[Admin] Image upload error:', err);
+        setSaveMsg('Image upload error: ' + (err.message || JSON.stringify(err)));
         setSaving(false);
         return;
       }
     }
 
-    const { error } = await supabase.from('products').insert({
-      name: newProduct.name,
-      price_ngn: parseInt(newProduct.price_ngn) || 0,
-      price_usd: parseInt(newProduct.price_usd) || 0,
-      category: newProduct.category,
-      tag: newProduct.tag.toUpperCase(),
-      image_url: imageUrl,
-    });
-    setSaving(false);
-    if (error) { setSaveMsg('Error: ' + error.message); }
-    else { 
-      setSaveMsg('Product added!'); 
-      setNewProduct({ name: '', price_ngn: '', price_usd: '', category: 'Bespoke', tag: '', image_url: '' }); 
+    // Insert product into DB
+    try {
+      console.log('[Admin] Inserting product into DB...');
+      const insertPromise = supabase.from('products').insert({
+        name: newProduct.name,
+        price_ngn: parseInt(newProduct.price_ngn) || 0,
+        price_usd: parseInt(newProduct.price_usd) || 0,
+        category: newProduct.category,
+        tag: newProduct.tag.toUpperCase(),
+        image_url: imageUrl,
+      });
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('DB insert timed out after 15 seconds. Check your Supabase URL and network.')), 15000)
+      );
+
+      const { error } = await Promise.race([insertPromise, timeoutPromise]);
+      if (error) throw error;
+
+      console.log('[Admin] Product saved successfully!');
+      setSaveMsg('Product added!');
+      setNewProduct({ name: '', price_ngn: '', price_usd: '', category: 'Bespoke', tag: '', image_url: '' });
       setImageFile(null);
       setShowAddProduct(false);
       fetchProducts();
+    } catch (err) {
+      console.error('[Admin] DB insert error:', err);
+      setSaveMsg('Error: ' + (err.message || JSON.stringify(err)));
+    } finally {
+      setSaving(false);
     }
   };
+
 
   const deleteProduct = async (id) => {
     if (!window.confirm('Are you sure you want to delete this design? This cannot be undone.')) return;
