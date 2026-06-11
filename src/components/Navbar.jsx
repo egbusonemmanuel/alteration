@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useAuth, useUser, UserButton, SignInButton } from '@clerk/clerk-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth, useUser, UserButton } from '@clerk/clerk-react';
 import {
   LocalMallOutlined as ShoppingBag,
   Inventory2Outlined as Box,
@@ -14,9 +14,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Navbar = ({ currency, setCurrency }) => {
   const [isHovered, setIsHovered] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [loadingSignIn, setLoadingSignIn] = useState(false);
   const { isSignedIn } = useAuth();
   const { user } = useUser();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleSignInClick = () => {
+    setLoadingSignIn(true);
+    setTimeout(() => {
+      navigate('/sign-in');
+      setLoadingSignIn(false);
+    }, 800);
+  };
   
   const adminEmails = ['delectablesvelt@gmail.com', 'vibesemmy3@gmail.com'];
   const userEmail = user?.primaryEmailAddress?.emailAddress;
@@ -78,9 +88,16 @@ const Navbar = ({ currency, setCurrency }) => {
           {isSignedIn ? (
             <UserButton appearance={{ elements: { avatarBox: 'w-8 h-8 sm:w-9 sm:h-9 border-2 border-lavender' } }} />
           ) : (
-            <SignInButton mode="modal">
-              <button className="btn-primary py-2 px-3 sm:px-4 text-[10px] sm:text-xs">SIGN IN</button>
-            </SignInButton>
+            <button 
+              onClick={handleSignInClick}
+              disabled={loadingSignIn}
+              className="btn-primary py-2 px-3 sm:px-4 text-[10px] sm:text-xs flex items-center gap-2"
+            >
+              {loadingSignIn ? (
+                <div className="w-3 h-3 border-2 border-obsidian border-t-transparent rounded-full animate-spin" />
+              ) : null}
+              SIGN IN
+            </button>
           )}
 
           {/* MOBILE MENU TOGGLE */}

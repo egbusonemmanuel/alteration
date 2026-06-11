@@ -34,11 +34,11 @@ const Admin = () => {
 
   const fetchBookings = async () => {
     setLoading(true);
+    const adminPass = sessionStorage.getItem('admin_token') || 'svelt2026';
     const { data, error } = await supabase
-      .from('bookings')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .rpc('secure_fetch_bookings', { pass: adminPass });
     if (!error && data) setBookings(data);
+    else if (error) console.error('[Admin] Error fetching bookings:', error);
     setLoading(false);
   };
 
@@ -53,8 +53,13 @@ const Admin = () => {
   useEffect(() => { if (activeTab === 'products') fetchProducts(); }, [activeTab]);
 
   const updateStatus = async (id, status) => {
-    await supabase.from('bookings').update({ status }).eq('id', id);
-    setBookings(prev => prev.map(b => b.id === id ? { ...b, status } : b));
+    const adminPass = sessionStorage.getItem('admin_token') || 'svelt2026';
+    const { error } = await supabase.rpc('secure_update_booking_status', { pass: adminPass, b_id: id, b_status: status });
+    if (!error) {
+      setBookings(prev => prev.map(b => b.id === id ? { ...b, status } : b));
+    } else {
+      console.error('[Admin] Error updating status:', error);
+    }
   };
 
   const addProduct = async () => {
@@ -94,13 +99,15 @@ const Admin = () => {
     // Insert product into DB
     try {
       console.log('[Admin] Inserting product into DB...');
-      const insertPromise = supabase.from('products').insert({
-        name: newProduct.name,
-        price_ngn: parseInt(newProduct.price_ngn) || 0,
-        price_usd: parseInt(newProduct.price_usd) || 0,
-        category: newProduct.category,
-        tag: newProduct.tag.toUpperCase(),
-        image_url: imageUrl,
+      const adminPass = sessionStorage.getItem('admin_token') || 'svelt2026';
+      const insertPromise = supabase.rpc('secure_add_product', {
+        pass: adminPass,
+        p_name: newProduct.name,
+        p_price_ngn: parseInt(newProduct.price_ngn) || 0,
+        p_price_usd: parseInt(newProduct.price_usd) || 0,
+        p_category: newProduct.category,
+        p_tag: newProduct.tag.toUpperCase(),
+        p_image_url: imageUrl,
       });
       const timeoutPromise = new Promise((_, reject) =>
         setTimeout(() => reject(new Error('DB insert timed out after 15 seconds. Check your Supabase URL and network.')), 15000)
@@ -127,8 +134,10 @@ const Admin = () => {
   const deleteProduct = async (id) => {
     if (!window.confirm('Are you sure you want to delete this design? This cannot be undone.')) return;
     setDeletingId(id);
-    const { error } = await supabase.from('products').delete().eq('id', id);
+    const adminPass = sessionStorage.getItem('admin_token') || 'svelt2026';
+    const { error } = await supabase.rpc('secure_delete_product', { pass: adminPass, p_id: id });
     if (!error) setProducts(prev => prev.filter(p => p.id !== id));
+    else console.error('[Admin] Error deleting product:', error);
     setDeletingId(null);
   };
 

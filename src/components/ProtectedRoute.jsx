@@ -9,6 +9,7 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   const [password, setPassword] = useState('');
   const [unlocked, setUnlocked] = useState(false);
   const [error, setError] = useState('');
+  const [unlocking, setUnlocking] = useState(false);
 
   if (!isLoaded) {
     return (
@@ -40,12 +41,18 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
     if (!unlocked) {
       const handleUnlock = (e) => {
         e.preventDefault();
-        const masterPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'svelt2026';
-        if (password === masterPassword) {
-          setUnlocked(true);
-        } else {
-          setError('Invalid Master Tailor Password.');
-        }
+        setUnlocking(true);
+        setError('');
+        setTimeout(() => {
+          const masterPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'svelt2026';
+          if (password === masterPassword) {
+            sessionStorage.setItem('admin_token', password);
+            setUnlocked(true);
+          } else {
+            setError('Invalid Master Tailor Password.');
+          }
+          setUnlocking(false);
+        }, 800);
       };
 
       return (
@@ -66,7 +73,14 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-lavender transition-colors text-ivory text-center tracking-[0.2em]"
               />
               {error && <p className="text-red-400 text-[10px] uppercase tracking-widest font-bold">{error}</p>}
-              <button type="submit" className="w-full btn-primary py-4">UNLOCK ATELIER</button>
+              <button type="submit" disabled={unlocking} className="w-full btn-primary py-4 flex items-center justify-center gap-2">
+                {unlocking ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-obsidian border-t-transparent rounded-full animate-spin" />
+                    UNLOCKING...
+                  </>
+                ) : 'UNLOCK ATELIER'}
+              </button>
             </form>
           </div>
         </div>
